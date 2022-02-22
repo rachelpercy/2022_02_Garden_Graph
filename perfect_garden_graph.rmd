@@ -47,14 +47,26 @@ garden_harvest %>%
   labs(x = "", y = "Daily Harvest (grams)", title = "Daily Harvest of Vegetables During Harvest Season")
 ```
 
-Instructor's feedback: (copy the feedback from moodle here)
+Instructor's feedback: Good idea but the code you used isn't quite doing what you think it is. If you want the total harvest for each date for all the veggies together, group_by(date) and then summarize right away. Remove the y-axis label and add the units to the title. Convert weight to pounds or kilgrams since they are large values. Remove the vertical grid lines using theme().
 
 ## Graph Week 2
 
-Question I hope to answer: (probably the same as previous week but may change slightly)
+Question I hope to answer: What is the daily rate of change in total weight harvested over the season?
 
-```{r}
-
+```{r fig.alt = "explain the graph"}
+garden_harvest %>% 
+  group_by(date) %>% 
+  summarise(total_daily_harvest = sum(weight * 0.00220462)) %>% 
+  mutate(cum_harvest = cumsum(total_daily_harvest),
+         day_lag = lag(cum_harvest),
+         daily_percent_change = total_daily_harvest/day_lag) %>% 
+  replace_na(list(day_lag = 0, daily_change = 0)) %>% 
+  ungroup() %>% 
+  ggplot(aes(x = date)) +
+  geom_line(aes(y = daily_percent_change)) +
+  labs(x = "", y = "", title = "Daily Percent Change of Total Weight Harvested Over the Season") +
+  theme(panel.grid.major.x = element_blank())
+  
 ```
 
 Instructor's feedback: (copy the feedback from moodle here)
