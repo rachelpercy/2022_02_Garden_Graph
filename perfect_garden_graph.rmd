@@ -1,0 +1,91 @@
+---
+title: "Perfect Garden Graph"
+author: "RACHEL PERCY"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+    code_download: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r libraries}
+library(tidyverse)         # for graphing and data cleaning
+library(lubridate)         # for working with dates
+# For the garden data, you need to first install the remotes library, if you haven't already
+library(remotes)
+library(gardenR)
+theme_set(theme_minimal())  # set a theme if desired
+```
+
+```{r data}
+# load the garden data 
+data(garden_harvest)
+```
+
+Explain the question you hope to answer and create the graph below in the Graph Week 1 section. For the first week, you may not have the skills quite yet to create exactly what you want to create - that's ok! Get as close as you can, and the instructors will give you feedback to help you out. You can summarize the data in any way you'd like. Add R code chunks and comment code as needed. As the weeks go by, you will continue to build on this file by putting new code in the next Graph sections. You will keep all the old code, add your instructor's feedback by copying and pasting it from moodle (found in the Grade section of moodle), and make improvements from my suggestions and from other ideas you have. Having the old code and graphs and the instructor feedback will help you (and the instructors) easily see the progress throughout the course.
+
+FYI, Prof. Lisa just added 2021 data to the `gardenR` package. If you want to use that data (either with the 2020 data or by itself), you will need to reinstall the package. Just a warning that variable names were maintained but names of vegetables and varieties changed in a few cases over the two years (oops). After you load the dataset, you can search for gardenR in the Help tab to find out more about the new datasets.
+
+## Graph Week 1
+
+**Question I hope to answer**: *How does total weight harvested vary during the harvest season? Is there one peak, or multiple?*
+
+```{r}
+garden_harvest %>% 
+  group_by(date, vegetable) %>% 
+  summarise(total_daily_harvest = sum(weight)) %>% 
+  group_by(date) %>% 
+  mutate(cum_harvest = cumsum(total_daily_harvest)) %>% 
+  ungroup() %>% 
+  ggplot(aes(x = date, y = cum_harvest)) +
+  geom_line() +
+  labs(x = "", y = "Daily Harvest (grams)", title = "Daily Harvest of Vegetables During Harvest Season")
+```
+
+Instructor's feedback: (copy the feedback from moodle here)
+
+## Graph Week 2
+
+Question I hope to answer: (probably the same as previous week but may change slightly)
+
+```{r}
+
+```
+
+Instructor's feedback: (copy the feedback from moodle here)
+
+## Graph Week 3
+
+Question I hope to answer: (probably the same as previous week but may change slightly)
+
+```{r}
+
+```
+
+Instructor's feedback: (copy the feedback from moodle here)
+
+## Graph Week 4
+
+Question I hope to answer: (probably the same as previous week but may change slightly)
+
+```{r}
+
+```
+
+Instructor's feedback: (copy the feedback from moodle here)
+
+## Graph Week 5
+
+Question I hope to answer: (probably the same as previous week but may change slightly)
+
+```{r}
+
+```
+
+Instructor's feedback: (copy the feedback from moodle here)
+
